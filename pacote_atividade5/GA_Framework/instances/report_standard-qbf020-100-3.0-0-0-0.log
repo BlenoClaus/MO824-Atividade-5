@@ -1,0 +1,16 @@
+{
+	Instancia		: instances/qbf020
+	Interações		: 100000
+	Tamanho pop.		: 100
+	Mutação taxa		: 0.03
+	Algoritmo		: Padrão
+		(Gen. 0) BestSol = Solution: cost=[63.0], size=[8], elements=[4, 7, 9, 11, 12, 13, 14, 15]
+		(Gen. 1) BestSol = Solution: cost=[66.0], size=[9], elements=[0, 1, 2, 3, 4, 9, 14, 15, 16]
+		(Gen. 2) BestSol = Solution: cost=[89.0], size=[8], elements=[0, 1, 2, 4, 9, 12, 16, 18]
+		(Gen. 3) BestSol = Solution: cost=[101.0], size=[9], elements=[0, 1, 2, 4, 9, 12, 13, 16, 18]
+		(Gen. 5) BestSol = Solution: cost=[111.0], size=[9], elements=[0, 1, 2, 4, 9, 12, 14, 16, 18]
+		(Gen. 10) BestSol = Solution: cost=[125.0], size=[9], elements=[2, 3, 4, 9, 11, 14, 15, 16, 19]
+
+		maxVal = Solution: cost=[125.0], size=[9], elements=[2, 3, 4, 9, 11, 14, 15, 16, 19]
+
+}

@@ -19,7 +19,7 @@ public class Report {
 		}; 
 	
 	static Integer[] INTERATIONS = {
-			1000,
+			100000,
 			100000,
 			10000000,
 			10000000,
@@ -58,7 +58,12 @@ public class Report {
 				final int z = i;
 				final int h = j;
 				final int v = t;
-				gaStandardJob(z, h, v);
+				new Thread() {
+					public void run() {
+						gaStandardJob(z, h, v);
+					};
+				}.start();
+				Thread.sleep(10000);
 			}
 		}
 		
@@ -84,7 +89,7 @@ public class Report {
 			Log.getLogger(fileLogName).info("{\n\tInstancia		: "+INSTANCES[z]);
 			Log.getLogger(fileLogName).info("\tInterações		: "+INTERATIONS[z]);
 			Log.getLogger(fileLogName).info("\tTamanho pop.		: "+POPULATION_SIZE[h]);
-			Log.getLogger(fileLogName).info("\tMutação taxa		: "+MUTATION_RATE[v]);
+			Log.getLogger(fileLogName).info("\tMutação taxa		: "+MUTATION_RATE[v]/POPULATION_SIZE[h]);
 			Log.getLogger(fileLogName).info("\tAlgoritmo		: Padrão");
 			GA_QBFPT solver = new GA_QBFPT(INTERATIONS[z], POPULATION_SIZE[h], MUTATION_RATE[v]/POPULATION_SIZE[h], INSTANCES[z]);
 			Solution<Integer> solve = solver.solve();
