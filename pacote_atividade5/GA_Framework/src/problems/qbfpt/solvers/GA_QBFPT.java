@@ -1,12 +1,12 @@
 package problems.qbfpt.solvers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import problems.log.Log;
 import problems.qbf.solvers.GA_QBF;
 import problems.qbfpt.triple.ForbiddenTriplesBuilder;
+import problems.qbfpt.triple.Triple;
 import solutions.Solution;
 
 public class GA_QBFPT extends GA_QBF {
@@ -25,16 +25,6 @@ public class GA_QBFPT extends GA_QBF {
 		for (int locus = 0; locus < chromosome.size(); locus++) {
 			if (chromosome.get(locus) == 1) {
 				solution.add(new Integer(locus));
-				
-				List<Integer> forbiddenValues = new ArrayList<>();
-				Integer lastElem = solution.get(solution.size()-1);
-				for (int i = 0; i < solution.size()-1; i++) {
-					forbiddenValues.addAll(ftBuilder.getForbiddenValues(solution.get(i)+1, lastElem+1));
-				}
-				for (Integer fv : forbiddenValues) {
-					int index = solution.indexOf(fv-1);
-					if (index >= 0) solution.remove(index);
-				}
 			}
 		}
 		ObjFunction.evaluate(solution);
@@ -43,8 +33,7 @@ public class GA_QBFPT extends GA_QBF {
 	
 	@Override
 	protected Double fitness(Chromosome chromosome) {
-		if (forbiddenChromosome(chromosome))
-			return Double.NEGATIVE_INFINITY;
+		correctChromosome(chromosome);
 		return decode(chromosome).cost;
 	}
 	
@@ -53,12 +42,11 @@ public class GA_QBFPT extends GA_QBF {
 		double bestFitness = Double.NEGATIVE_INFINITY;
 		Chromosome bestChromosome = null;
 		for (Chromosome c : population) {
-			if (!forbiddenChromosome(c)) {
-				double fitness = fitness(c);
-				if (fitness > bestFitness) {
-					bestFitness = fitness;
-					bestChromosome = c;
-				}
+			correctChromosome(c);
+			double fitness = fitness(c);
+			if (fitness > bestFitness) {
+				bestFitness = fitness;
+				bestChromosome = c;
 			}
 		}
 		return bestChromosome;
@@ -69,7 +57,7 @@ public class GA_QBFPT extends GA_QBF {
 		double worseFitness = Double.POSITIVE_INFINITY;
 		Chromosome worseChromosome = null;
 		for (Chromosome c : population) {
-			if (forbiddenChromosome(c)) return c;
+			correctChromosome(c);
 			double fitness = fitness(c);
 			if (fitness < worseFitness) {
 				worseFitness = fitness;
@@ -79,28 +67,26 @@ public class GA_QBFPT extends GA_QBF {
 		return worseChromosome;
 	}
 	
-	private boolean forbiddenChromosome(Chromosome chromosome) {
-		List<Integer> forbiddenValues = new ArrayList<>();
-		for (int i = 0; i < chromosomeSize; i++) {
-			for (int j = 0; j < chromosomeSize; j++) {
-				if (i == j) continue;
-				int z = chromosome.get(i);
-				int m = chromosome.get(j);
-				if (z == 1 && m == 1) {
-					forbiddenValues.addAll(ftBuilder.getForbiddenValues(i+1, j+1));
-				}
+	private void correctChromosome(Chromosome chromosome) {
+		List<Triple> forbiddenTriple = ftBuilder.getForbiddenTriple();
+		for (Triple triple : forbiddenTriple) {
+			if (chromosome.get(triple.getX()-1) == 1 &&
+				chromosome.get(triple.getY()-1) == 1 &&
+				chromosome.get(triple.getZ()-1) == 1) {
+				mutateGene(chromosome, triple.asList().get(rng.nextInt(3))-1);
 			}
 		}
-		
-		for (int i = 0; i < chromosomeSize; i++) {
-			Integer lacus = chromosome.get(i);
-			if (lacus == 1) {
-				if (forbiddenValues.contains(lacus+1)) {
-					return Boolean.TRUE;
-				}
-			}
+	}
+	
+	@Override
+	protected Population selectPopulation(Population offsprings) {
+		offsprings.stream().forEach(c -> correctChromosome(c));
+		Chromosome worse = getWorseChromosome(offsprings);
+		if (fitness(worse) < fitness(bestChromosome)) {
+			offsprings.remove(worse);
+			offsprings.add(bestChromosome);
 		}
-		return Boolean.FALSE;
+		return offsprings;
 	}
 	
 	@Override
@@ -114,7 +100,6 @@ public class GA_QBFPT extends GA_QBF {
 		bestSol = decode(bestChromosome);
 		report.append("\t\t(Gen. " + 0 + ") BestSol = " + bestSol+"\n");
 		
-
 		/*
 		 * enters the main loop and repeats until a given number of generations
 		 */
@@ -152,12 +137,12 @@ public class GA_QBFPT extends GA_QBF {
 	public static void main(String[] args) throws IOException {
 		long startTime = System.currentTimeMillis();
 		String fileLogName = getLogFileName("teste",1,1,1);
-		Log.getLogger(fileLogName).info("{\n\tInstancia		: instances/qbf020");
+		Log.getLogger(fileLogName).info("{\n\tInstancia		: instances/qbf100");
 		Log.getLogger(fileLogName).info("\tInterações		: 100");
 		Log.getLogger(fileLogName).info("\tTamanho pop.		: 100");
 		Log.getLogger(fileLogName).info("\tMutação taxa		: "+1.0/100.0);
 		Log.getLogger(fileLogName).info("\tAlgoritmo		: Padrão");
-		GA_QBF ga = new GA_QBFPT(100, 100, 1.0 / 100.0, "instances/qbf020");
+		GA_QBF ga = new GA_QBFPT(10000, 100, 1.0 / 100.0, "instances/qbf100");
 		Solution<Integer> bestSol = ga.solve();
 		Log.getLogger(fileLogName).info("maxVal = " + bestSol);
 		long endTime = System.currentTimeMillis();

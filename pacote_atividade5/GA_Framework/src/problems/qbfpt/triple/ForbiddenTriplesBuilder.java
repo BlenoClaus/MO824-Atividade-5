@@ -52,6 +52,10 @@ public class ForbiddenTriplesBuilder {
 		return this.forbiddenTriple;
 	}
 	
+	public List<Triple> getForbiddenTriple() {
+		return build();
+	}
+	
 	public static void main(String[] args) {
 		int n = 5;
 		List<Triple> build = new ForbiddenTriplesBuilder(n).build();

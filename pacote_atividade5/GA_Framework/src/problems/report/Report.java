@@ -34,8 +34,8 @@ public class Report {
 	};
 	
 	static Double[] MUTATION_RATE = {
-			1.0 / 100.0,
-			3.0 / 100.0
+			1.0,
+			3.0
 	};
 	
 	private static synchronized String getLogFileName(String prefix, int i, int j, int t) {
@@ -86,7 +86,7 @@ public class Report {
 			Log.getLogger(fileLogName).info("\tTamanho pop.		: "+POPULATION_SIZE[h]);
 			Log.getLogger(fileLogName).info("\tMutação taxa		: "+MUTATION_RATE[v]);
 			Log.getLogger(fileLogName).info("\tAlgoritmo		: Padrão");
-			GA_QBFPT solver = new GA_QBFPT(INTERATIONS[z], POPULATION_SIZE[h], MUTATION_RATE[v], INSTANCES[z]);
+			GA_QBFPT solver = new GA_QBFPT(INTERATIONS[z], POPULATION_SIZE[h], MUTATION_RATE[v]/POPULATION_SIZE[h], INSTANCES[z]);
 			Solution<Integer> solve = solver.solve();
 			Log.getLogger(fileLogName).info(solver.getReport());
 			Log.getLogger(fileLogName).info("\t\tmaxVal = " + solve);

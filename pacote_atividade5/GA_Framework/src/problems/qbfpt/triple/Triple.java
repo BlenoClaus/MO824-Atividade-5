@@ -1,7 +1,6 @@
 package problems.qbfpt.triple;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -102,7 +101,7 @@ public class Triple {
 		return l1.equals(l2);
 	}
 
-	public Collection<? extends Integer> asList() {
+	public List<Integer> asList() {
 		return Arrays.asList(x,y,z);
 	}
 	
