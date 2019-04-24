@@ -3,18 +3,20 @@ package problems.qbfpt.solvers;
 import java.io.IOException;
 import java.util.List;
 
+import metaheuristics.ga.AbstractGA.Chromosome;
+import metaheuristics.ga.AbstractGA.Population;
 import problems.log.Log;
 import problems.qbf.solvers.GA_QBF;
 import problems.qbfpt.triple.ForbiddenTriplesBuilder;
 import problems.qbfpt.triple.Triple;
 import solutions.Solution;
 
-public class GA_QBFPT extends GA_QBF {
+public class GA_QBFPT_UniformCrossover extends GA_QBF {
 
 	private ForbiddenTriplesBuilder ftBuilder;
 	private StringBuilder report = new StringBuilder();
 
-	public GA_QBFPT(Integer generations, Integer popSize, Double mutationRate, String filename) throws IOException {
+	public GA_QBFPT_UniformCrossover(Integer generations, Integer popSize, Double mutationRate, String filename) throws IOException {
 		super(generations, popSize, mutationRate, filename);
 		this.ftBuilder = new ForbiddenTriplesBuilder(ObjFunction.getDomainSize());
 	}
@@ -136,6 +138,48 @@ public class GA_QBFPT extends GA_QBF {
 		return "report_"+prefix+"-"+instance+"-"+pop+"-"+rate+"-"+i+"-"+j+"-"+j+".log";
 	}
 	
+	@Override
+	protected Population crossover(Population parents) {
+		Population offsprings = new Population();
+
+		for (int i = 0; i < popSize; i = i + 2) {
+
+			Chromosome parent1 = parents.get(i);
+			Chromosome parent2 = parents.get(i + 1);
+
+			
+			Chromosome offspring1 = new Chromosome();
+			Chromosome offspring2 = new Chromosome();
+
+			for (int j = 0; j < chromosomeSize; j++) {
+				/*if (j >= crosspoint1 && j < crosspoint2) {
+					offspring1.add(parent2.get(j));
+					offspring2.add(parent1.get(j));
+				} else {
+					offspring1.add(parent1.get(j));
+					offspring2.add(parent2.get(j));
+				}*/
+				if (rng.nextInt(2) == 1) {
+					offspring1.add(parent2.get(j));
+					offspring2.add(parent1.get(j));
+				}
+				else {
+					offspring1.add(parent1.get(j));
+					offspring2.add(parent2.get(j));
+				}
+			}
+			correctChromosome(offspring1);
+			correctChromosome(offspring2);
+			offsprings.add(offspring1);
+			offsprings.add(offspring2);
+
+		}
+
+		return offsprings;
+
+	}
+	
+	
 	public static void main(String[] args) throws IOException {
 		long startTime = System.currentTimeMillis();
 		String fileLogName = getLogFileName("teste",1,1,1);
@@ -144,7 +188,7 @@ public class GA_QBFPT extends GA_QBF {
 		Log.getLogger(fileLogName).info("\tTamanho pop.		: 100");
 		Log.getLogger(fileLogName).info("\tMutação taxa		: "+1.0/100.0);
 		Log.getLogger(fileLogName).info("\tAlgoritmo		: Padrão");
-		GA_QBF ga = new GA_QBFPT(10000, 100, 1.0 / 100.0, "instances/qbf100");
+		GA_QBF ga = new GA_QBFPT_UniformCrossover(10000, 100, 1.0 / 100.0, "instances/qbf200");
 		Solution<Integer> bestSol = ga.solve();
 		Log.getLogger(fileLogName).info("maxVal = " + bestSol);
 		long endTime = System.currentTimeMillis();
