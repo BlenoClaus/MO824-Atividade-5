@@ -1,5 +1,6 @@
 package problems.qbfpt.triple;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,14 +11,23 @@ public class Triple {
 	private int x;
 	private int y;
 	private int z;
-
+	public static Integer variaveisNaSolucao[] = new Integer [401];
+	
+	private ArrayList<Integer> elementosNaSolucao;
 	public Triple(int x, int y, int z) {
 		List<Integer> triple = Arrays.asList(x,y,z);
 		Collections.sort(triple);
 		this.x = triple.get(0);
 		this.y = triple.get(1);
 		this.z = triple.get(2);
+		elementosNaSolucao = new ArrayList<Integer>();
 	}
+	
+	public static void zeraVariaveis() {
+		variaveisNaSolucao = new Integer[401];
+	}
+	
+	
 	
 	public int getX() {
 		return x;
@@ -59,6 +69,29 @@ public class Triple {
 		if (x == t && z == u) return y;
 		if (y == t && z == u) return x;
 		return null;
+	}
+	
+	public boolean isFull() {
+		//return (elementosNaSolucao.size() == 3);
+		return (variaveisNaSolucao[x] == 1 && variaveisNaSolucao[y] == 1
+				&& variaveisNaSolucao[z] == 1);
+	}
+	
+	public void addElement (Integer u) {
+		elementosNaSolucao.add(u);
+	}
+	
+	public void popElement(Integer u) {
+		elementosNaSolucao.remove(u);
+	}
+	
+	public Integer getElemento(int index) {
+		if (index == 0)
+			return x;
+		if (index == 1)
+			return y;
+		else
+			return z;
 	}
 	
 	@Override

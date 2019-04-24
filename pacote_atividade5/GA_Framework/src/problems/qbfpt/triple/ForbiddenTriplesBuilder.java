@@ -3,6 +3,8 @@ package problems.qbfpt.triple;
 import java.util.ArrayList;
 import java.util.List;
 
+import metaheuristics.ga.AbstractGA.Chromosome;
+
 public class ForbiddenTriplesBuilder {
 	
 	private final static Integer pi1G = 131;
@@ -70,6 +72,14 @@ public class ForbiddenTriplesBuilder {
 			}
 		}
 		return values;
+	}
+
+	public List<Triple> getForbiddenTriple() {
+		return forbiddenTriple;
+	}
+
+	public void setForbiddenTriple(List<Triple> forbiddenTriple) {
+		this.forbiddenTriple = forbiddenTriple;
 	}
 	
 }

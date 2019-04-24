@@ -7,6 +7,7 @@ import java.util.List;
 import problems.log.Log;
 import problems.qbf.solvers.GA_QBF;
 import problems.qbfpt.triple.ForbiddenTriplesBuilder;
+import problems.qbfpt.triple.Triple;
 import solutions.Solution;
 
 public class GA_QBFPT extends GA_QBF {
@@ -69,7 +70,8 @@ public class GA_QBFPT extends GA_QBF {
 		double worseFitness = Double.POSITIVE_INFINITY;
 		Chromosome worseChromosome = null;
 		for (Chromosome c : population) {
-			if (forbiddenChromosome(c)) return c;
+			//if (forbiddenChromosome(c)) return c;
+			solutionRestore(c);	
 			double fitness = fitness(c);
 			if (fitness < worseFitness) {
 				worseFitness = fitness;
@@ -82,7 +84,7 @@ public class GA_QBFPT extends GA_QBF {
 	private boolean forbiddenChromosome(Chromosome chromosome) {
 		List<Integer> forbiddenValues = new ArrayList<>();
 		for (int i = 0; i < chromosomeSize; i++) {
-			for (int j = 0; j < chromosomeSize; j++) {
+			for (int j = i+1; j < chromosomeSize; j++) {
 				if (i == j) continue;
 				int z = chromosome.get(i);
 				int m = chromosome.get(j);
@@ -101,6 +103,21 @@ public class GA_QBFPT extends GA_QBF {
 			}
 		}
 		return Boolean.FALSE;
+	}
+	
+	public Chromosome solutionRestore (Chromosome c){
+		Triple.zeraVariaveis();
+		for (int i = 0; i < c.size(); i++) {
+			Triple.variaveisNaSolucao[i+1] = c.get(i);
+		}
+		
+		for (Triple t : ftBuilder.getForbiddenTriple()) {
+			if (t.isFull()) {
+				Integer out = t.getElemento(rng.nextInt(3));
+				c.set(out-1,0);
+			}
+		}
+		return c;
 	}
 	
 	@Override
@@ -152,12 +169,12 @@ public class GA_QBFPT extends GA_QBF {
 	public static void main(String[] args) throws IOException {
 		long startTime = System.currentTimeMillis();
 		String fileLogName = getLogFileName("teste",1,1,1);
-		Log.getLogger(fileLogName).info("{\n\tInstancia		: instances/qbf020");
+		Log.getLogger(fileLogName).info("{\n\tInstancia		: instances/qbf040");
 		Log.getLogger(fileLogName).info("\tInterações		: 100");
 		Log.getLogger(fileLogName).info("\tTamanho pop.		: 100");
 		Log.getLogger(fileLogName).info("\tMutação taxa		: "+1.0/100.0);
 		Log.getLogger(fileLogName).info("\tAlgoritmo		: Padrão");
-		GA_QBF ga = new GA_QBFPT(100, 100, 1.0 / 100.0, "instances/qbf020");
+		GA_QBF ga = new GA_QBFPT(100, 100, 1.0 / 100.0, "instances/qbf040");
 		Solution<Integer> bestSol = ga.solve();
 		Log.getLogger(fileLogName).info("maxVal = " + bestSol);
 		long endTime = System.currentTimeMillis();
