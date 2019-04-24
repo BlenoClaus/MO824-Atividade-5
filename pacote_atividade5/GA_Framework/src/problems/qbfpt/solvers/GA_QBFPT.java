@@ -122,6 +122,7 @@ public class GA_QBFPT extends GA_QBF {
 			long totalTime = endTime - startTime;
 			totalTempo = (double)totalTime/(double)1000;
 		}
+		report.append("\t\tTempo Total = " +totalTempo+"\n");
 		return bestSol;
 	}
 	

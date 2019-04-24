@@ -1,0 +1,16 @@
+{
+	Instancia		: instances/qbf020
+	Interações		: 100000
+	Tamanho pop.		: 1000
+	Mutação taxa		: 0.003
+	Algoritmo		: UniformCrossove
+		(Gen. 0) BestSol = Solution: cost=[98.0], size=[10], elements=[0, 1, 2, 4, 8, 9, 11, 14, 16, 18]
+		(Gen. 2) BestSol = Solution: cost=[104.0], size=[9], elements=[3, 4, 6, 9, 11, 13, 14, 15, 16]
+		(Gen. 4) BestSol = Solution: cost=[107.0], size=[9], elements=[0, 1, 2, 4, 8, 9, 12, 14, 18]
+		(Gen. 5) BestSol = Solution: cost=[116.0], size=[8], elements=[2, 3, 4, 9, 11, 14, 15, 16]
+		(Gen. 6) BestSol = Solution: cost=[120.0], size=[7], elements=[2, 3, 4, 11, 14, 15, 16]
+		(Gen. 9) BestSol = Solution: cost=[125.0], size=[9], elements=[2, 3, 4, 9, 11, 14, 15, 16, 19]
+
+		maxVal = Solution: cost=[125.0], size=[9], elements=[2, 3, 4, 9, 11, 14, 15, 16, 19]
+
+}

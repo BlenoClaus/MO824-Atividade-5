@@ -1,0 +1,20 @@
+{
+	Instancia		: instances/qbf040
+	Interações		: 100000
+	Tamanho pop.		: 1000
+	Mutação taxa		: 0.003
+	Algoritmo		: UniformCrossove
+		(Gen. 0) BestSol = Solution: cost=[169.0], size=[19], elements=[2, 3, 4, 5, 7, 8, 9, 11, 14, 15, 17, 19, 21, 25, 27, 31, 32, 33, 36]
+		(Gen. 1) BestSol = Solution: cost=[215.0], size=[16], elements=[1, 2, 4, 9, 11, 14, 15, 18, 21, 24, 26, 31, 32, 34, 35, 36]
+		(Gen. 4) BestSol = Solution: cost=[230.0], size=[17], elements=[1, 2, 4, 7, 11, 18, 19, 21, 23, 24, 25, 26, 31, 32, 34, 36, 39]
+		(Gen. 8) BestSol = Solution: cost=[260.0], size=[17], elements=[1, 2, 4, 7, 9, 11, 14, 18, 19, 21, 23, 24, 31, 34, 35, 36, 37]
+		(Gen. 9) BestSol = Solution: cost=[261.0], size=[16], elements=[1, 2, 4, 7, 9, 11, 14, 18, 19, 21, 22, 24, 31, 32, 34, 36]
+		(Gen. 11) BestSol = Solution: cost=[312.0], size=[17], elements=[1, 4, 7, 9, 11, 15, 18, 19, 21, 23, 24, 26, 31, 32, 33, 34, 36]
+		(Gen. 12) BestSol = Solution: cost=[323.0], size=[18], elements=[1, 2, 4, 7, 9, 11, 14, 15, 18, 19, 21, 24, 25, 31, 32, 33, 34, 36]
+		(Gen. 16) BestSol = Solution: cost=[332.0], size=[18], elements=[1, 4, 7, 9, 11, 14, 15, 18, 19, 21, 23, 24, 26, 31, 32, 33, 34, 36]
+		(Gen. 17) BestSol = Solution: cost=[352.0], size=[19], elements=[1, 2, 4, 7, 9, 11, 14, 15, 18, 19, 21, 23, 24, 26, 31, 32, 33, 34, 36]
+		(Gen. 21) BestSol = Solution: cost=[366.0], size=[20], elements=[1, 2, 4, 7, 9, 11, 14, 15, 18, 19, 21, 23, 24, 25, 26, 31, 32, 33, 34, 36]
+
+		maxVal = Solution: cost=[366.0], size=[20], elements=[1, 2, 4, 7, 9, 11, 14, 15, 18, 19, 21, 23, 24, 25, 26, 31, 32, 33, 34, 36]
+
+}
