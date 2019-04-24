@@ -52,9 +52,6 @@ public class ForbiddenTriplesBuilder {
 		return this.forbiddenTriple;
 	}
 	
-	public List<Triple> getForbiddenTriple() {
-		return build();
-	}
 	
 	public static void main(String[] args) {
 		int n = 5;
@@ -74,6 +71,14 @@ public class ForbiddenTriplesBuilder {
 			}
 		}
 		return values;
+	}
+
+	public List<Triple> getForbiddenTriple() {
+		return forbiddenTriple;
+	}
+
+	public void setForbiddenTriple(List<Triple> forbiddenTriple) {
+		this.forbiddenTriple = forbiddenTriple;
 	}
 	
 }
