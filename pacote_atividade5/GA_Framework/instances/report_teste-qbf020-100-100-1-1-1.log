@@ -1,0 +1,7 @@
+{
+	Instancia		: instances/qbf040
+	Interações		: 100
+	Tamanho pop.		: 100
+	Mutação taxa		: 0.01
+	Algoritmo		: Padrão
+maxVal = Solution: cost=[366.0], size=[20], elements=[1, 2, 4, 7, 9, 11, 14, 15, 18, 19, 21, 23, 24, 25, 26, 31, 32, 33, 34, 36]
